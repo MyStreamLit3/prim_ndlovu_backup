@@ -32,8 +32,10 @@ import streamlit as st
 
 try:
     import mediapipe as mp
+    if not hasattr(mp, 'solutions'):
+        raise ImportError("mediapipe.solutions API not available in this version")
     MP_AVAILABLE = True
-except ImportError:
+except (ImportError, AttributeError):
     MP_AVAILABLE = False
 
 # ─── Page Configuration ───────────────────────────────────────────────────────
