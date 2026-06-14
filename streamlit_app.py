@@ -299,7 +299,7 @@ if "start_time" not in st.session_state:
 # ─── SIDEBAR ──────────────────────────────────────────────────────────────────
 with st.sidebar:
     st.image("https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/NUST_Zimbabwe_crest.png/120px-NUST_Zimbabwe_crest.png",
-             width=80, use_container_width=False)
+             width=80)
     st.markdown("### Digital Twin Controls")
     st.caption("NUST MEng Research — Ndlovu Primrose")
     st.divider()
@@ -464,7 +464,7 @@ if video_source is not None and run_analysis:
             st.session_state.history.append(record)
 
         # ── Column 1: Annotated video ──
-        video_ph.image(rgb, channels="RGB", use_container_width=True)
+        video_ph.image(rgb, channels="RGB", width="stretch")
 
         # ── Column 2: 3-D Digital Twin ──
         fig3d = go.Figure()
@@ -495,7 +495,7 @@ if video_source is not None and run_analysis:
             ),
             showlegend=False, height=340,
         )
-        twin_ph.plotly_chart(fig3d, use_container_width=True)
+        twin_ph.plotly_chart(fig3d, width="stretch")
 
         # ── Alert Cards ──
         if rula_d:
@@ -546,7 +546,7 @@ if video_source is not None and run_analysis:
                 xaxis_title="Elapsed (s)", yaxis_title="Score",
                 legend=dict(orientation="h"), height=240,
                 margin=dict(l=0, r=0, t=20, b=0), paper_bgcolor="rgba(0,0,0,0)")
-            trend_ph.plotly_chart(fig_trend, use_container_width=True)
+            trend_ph.plotly_chart(fig_trend, width="stretch")
 
             joint_cols = [c for c in df_h.columns if c in
                           ["R_elbow", "R_upper_arm", "neck", "trunk", "R_knee"]]
@@ -556,7 +556,7 @@ if video_source is not None and run_analysis:
                                          "variable": "Joint"}, height=240)
                 fig_jt.update_layout(margin=dict(l=0, r=0, t=20, b=0),
                                      paper_bgcolor="rgba(0,0,0,0)")
-                joint_trend_ph.plotly_chart(fig_jt, use_container_width=True)
+                joint_trend_ph.plotly_chart(fig_jt, width="stretch")
 
             if rula_d and reba_d:
                 df_heat = build_heatmap_df(angles, rula_d, reba_d)
@@ -568,7 +568,7 @@ if video_source is not None and run_analysis:
                                        margin=dict(l=0, r=0, t=20, b=0),
                                        paper_bgcolor="rgba(0,0,0,0)",
                                        yaxis=dict(range=[0, 5]))
-                heatmap_ph.plotly_chart(fig_heat, use_container_width=True)
+                heatmap_ph.plotly_chart(fig_heat, width="stretch")
 
                 detail_rows = [
                     ("RULA – Upper Arm Score", rula_d.get("upper_arm_score")),
