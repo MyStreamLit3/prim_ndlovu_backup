@@ -495,7 +495,7 @@ if video_source is not None and run_analysis:
             ),
             showlegend=False, height=340,
         )
-        twin_ph.plotly_chart(fig3d, width="stretch")
+        twin_ph.plotly_chart(fig3d, width="stretch", key=f"twin_{frame_count}")
 
         # ── Alert Cards ──
         if rula_d:
@@ -546,7 +546,7 @@ if video_source is not None and run_analysis:
                 xaxis_title="Elapsed (s)", yaxis_title="Score",
                 legend=dict(orientation="h"), height=240,
                 margin=dict(l=0, r=0, t=20, b=0), paper_bgcolor="rgba(0,0,0,0)")
-            trend_ph.plotly_chart(fig_trend, width="stretch")
+            trend_ph.plotly_chart(fig_trend, width="stretch", key=f"trend_{frame_count}")
 
             joint_cols = [c for c in df_h.columns if c in
                           ["R_elbow", "R_upper_arm", "neck", "trunk", "R_knee"]]
@@ -556,7 +556,7 @@ if video_source is not None and run_analysis:
                                          "variable": "Joint"}, height=240)
                 fig_jt.update_layout(margin=dict(l=0, r=0, t=20, b=0),
                                      paper_bgcolor="rgba(0,0,0,0)")
-                joint_trend_ph.plotly_chart(fig_jt, width="stretch")
+                joint_trend_ph.plotly_chart(fig_jt, width="stretch", key=f"jointtrend_{frame_count}")
 
             if rula_d and reba_d:
                 df_heat = build_heatmap_df(angles, rula_d, reba_d)
@@ -568,7 +568,7 @@ if video_source is not None and run_analysis:
                                        margin=dict(l=0, r=0, t=20, b=0),
                                        paper_bgcolor="rgba(0,0,0,0)",
                                        yaxis=dict(range=[0, 5]))
-                heatmap_ph.plotly_chart(fig_heat, width="stretch")
+                heatmap_ph.plotly_chart(fig_heat, width="stretch", key=f"heatmap_{frame_count}")
 
                 detail_rows = [
                     ("RULA – Upper Arm Score", rula_d.get("upper_arm_score")),
@@ -589,7 +589,10 @@ if video_source is not None and run_analysis:
                     ("OCRA – Index",           ocra_d.get("ocra_index")),
                     ("OCRA – Level",           ocra_d.get("ocra_level")),
                 ]
-                scores_ph.table(pd.DataFrame(detail_rows, columns=["Metric", "Value"]))
+                scores_ph.table(pd.DataFrame(
+                    [(m, str(v)) for m, v in detail_rows],
+                    columns=["Metric", "Value"]
+                ))
 
     cap.release()
 
